@@ -2,11 +2,15 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class Handler extends ExceptionHandler
 {
@@ -59,6 +63,22 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (NotFoundHttpException $e) {
             return response()->json(config('rc.not_found'), $e->getStatusCode());
+        });
+
+        $this->renderable(function (AuthenticationException $e) {
+            return response()->json(config('rc.unauthorized'), 401);
+        });
+
+        $this->renderable(function (ThrottleRequestsException $e) {
+            return response(config('rc.too_many_requests'), $e->getStatusCode());
+        });
+
+        $this->renderable(function (TokenExpiredException $e) {
+            return response()->json(config('rc.unauthorized'), 401);
+        });
+
+        $this->renderable(function (JWTException $e) {
+            return response()->json(config('rc.unauthorized'), 401);
         });
     }
 }
