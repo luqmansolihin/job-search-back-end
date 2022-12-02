@@ -3,7 +3,7 @@
 return [
     'ok' => [
         'rc' => '200',
-        'message' => 'Ok',
+        'message' => 'OK',
         'data' => false
     ],
     'bad_request' => [
@@ -19,6 +19,11 @@ return [
     'not_found' => [
         'rc' => '404',
         'message' => 'Not Found',
+        'data' => false
+    ],
+    'too_many_requests' => [
+        'rc' => '429',
+        'message' => 'Too Many Attempts',
         'data' => false
     ]
 ];
