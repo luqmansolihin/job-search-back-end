@@ -15,7 +15,7 @@ trait ApiResponses
         return response()->json($response, $statusCode);
     }
 
-    protected function successWithTOken(string $token, array $data = null, int $statusCode = 200): JsonResponse
+    protected function successWithToken(string $token, array $data = null, int $statusCode = 200): JsonResponse
     {
         $response = config('rc.ok');
 

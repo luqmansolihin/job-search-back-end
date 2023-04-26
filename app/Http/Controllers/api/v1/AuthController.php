@@ -5,7 +5,6 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Traits\ApiResponses;
-use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 
@@ -26,14 +25,14 @@ class AuthController extends Controller
 
         $user = auth()->user()->load('roles')->toArray();
 
-        return $this->successWithTOken($token, $user);
+        return $this->successWithToken($token, $user);
     }
 
     public function refresh(): JsonResponse
     {
         $token = auth()->refresh(true, true);
 
-        return $this->successWithTOken($token);
+        return $this->successWithToken($token);
     }
 
     public function logout(): JsonResponse
